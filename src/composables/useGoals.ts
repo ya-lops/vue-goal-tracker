@@ -4,6 +4,7 @@ import type { Goal, Step } from '@/types'
 
 // Данные, которые приходят из формы создания цели (без id и createdAt)
 export type NewGoal = Omit<Goal, 'id' | 'createdAt'>
+export type NewStep = Pick<Step, 'goalId' | 'title'>
 
 const GOALS_KEY = 'goal-tracker:goals'
 const STEPS_KEY = 'goal-tracker:steps'
@@ -44,17 +45,13 @@ export function useGoals(): UseGoalsReturn {
 
   // ---------- Подзадачи ----------
 
-  function addStep(goalId: string, title: string): Step | null {
-    const goalExists = goals.value.some((g) => g.id === goalId)
-    if (!goalExists) return null
-
+  function addStep(data: NewStep): Step {
     const step: Step = {
+      ...data,
       id: crypto.randomUUID(),
-      goalId,
-      title: title.trim(),
       isCompleted: false,
     }
-    steps.value.push(step)
+    steps.value = [...steps.value, step]
     return step
   }
 
