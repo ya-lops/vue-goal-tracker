@@ -1,14 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  goalId: string | null
+}>()
+</script>
 
 <template>
-  <div class="step-panel">
-    <h2>Выучить Vue 3</h2>
+  <div v-if="!goalId">
+    <p>Выберите цель, чтобы увидеть подзадачи</p>
+  </div>
+  <div v-else>
+    <h2>Подзадачи для цели {{ goalId }}</h2>
     <p class="step-panel__progress">Прогресс: 40%</p>
-
-    <form class="step-panel__form">
-      <input type="text" placeholder="Новая подзадача" />
-      <button type="submit">+</button>
-    </form>
 
     <ul class="step-list">
       <li class="step-list__item">
@@ -51,10 +53,10 @@
         <button class="step-list__remove" title="Удалить">×</button>
       </li>
     </ul>
-  </div>
 
-  <!-- Заглушка, когда цель не выбрана (можно оставить для проверки) -->
-  <!--
-        <p class="placeholder">Выберите цель, чтобы увидеть подзадачи</p>
-        -->
+    <form class="step-panel__form">
+      <input type="text" placeholder="Новая подзадача" />
+      <button type="submit">+</button>
+    </form>
+  </div>
 </template>

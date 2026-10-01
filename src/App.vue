@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import GoalForm from './components/GoalForm.vue'
 import GoalList from './components/GoalList.vue'
 import GoalSteps from './components/GoalSteps.vue'
 
 import { useGoals } from './composables/useGoals.ts';
 
-const { addGoal } = useGoals()
+const { goals, addGoal } = useGoals()
+
+const currentGoalId = ref<string | null>(null)
+
+function selectGoal(id: string) {
+  currentGoalId.value = id
+}
 </script>
 
 <template>
@@ -20,11 +27,11 @@ const { addGoal } = useGoals()
       </aside>
 
       <section class="app__panel app__panel--list">
-        <GoalList />
+        <GoalList :goals="goals" :current-goal-id="currentGoalId" @select="selectGoal" />
       </section>
 
       <aside class="app__panel app__panel--steps">
-        <GoalSteps />
+        <GoalSteps :goal-id="currentGoalId" />
       </aside>
     </main>
   </div>

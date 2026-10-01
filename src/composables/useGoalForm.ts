@@ -41,7 +41,6 @@ export function useGoalForm(onSubmit: (data: NewGoal) => void) {
 
     onSubmit(data)
     Object.values(fields).forEach((field) => field.reset())
-    console.log('submit goal')
   }
 
   return {

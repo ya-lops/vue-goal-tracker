@@ -26,16 +26,19 @@ const { fields, isFormValid, submit } = useGoalForm(props.onSubmit)
         Описание
         <textarea v-model="fields.description.value" @blur="fields.description.validateField"></textarea>
       </label>
-      <span v-if="fields.description.error" class="field-error-message">{{ fields.description.error }}</span>
+      <span v-if="fields.description.error" class="field-error-message">{{
+        fields.description.error
+      }}</span>
     </div>
 
     <div>
       <label>
         Дедлайн
-        <input type="date" v-model="fields.deadline.value" @blur="fields.deadline.validateField"
-          @input="console.log('Дата:', fields.deadline.value)" />
+        <input type="date" v-model="fields.deadline.value" @blur="fields.deadline.validateField" />
       </label>
-      <span v-if="fields.deadline.error" class="field-error-message">{{ fields.deadline.error }}</span>
+      <span v-if="fields.deadline.error" class="field-error-message">{{
+        fields.deadline.error
+      }}</span>
     </div>
 
     <div>
