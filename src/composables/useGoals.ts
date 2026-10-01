@@ -14,7 +14,7 @@ export interface UseGoalsReturn {
   steps: Ref<Step[]>
   addGoal: (data: NewGoal) => Goal
   deleteGoal: (id: string) => void
-  addStep: (goalId: string, title: string) => Step | null
+  addStep: (data: NewStep) => Step // ← новая сигнатура
   toggleStep: (stepId: string) => void
   deleteStep: (stepId: string) => void
   getStepsForGoal: (goalId: string) => ComputedRef<Step[]>

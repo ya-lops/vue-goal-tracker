@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, toValue } from 'vue'
 import { useFormField } from './useFormField'
 import type { NewStep } from './useGoals'
 
@@ -23,7 +23,7 @@ export function useStepForm(goalId: string, onSubmit: (data: NewStep) => void) {
 
     const data: NewStep = {
       goalId: goalId,
-      title: fields.title.value.value,
+      title: toValue(fields.title.value),
     }
 
     onSubmit(data)
