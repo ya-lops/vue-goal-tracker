@@ -1,39 +1,30 @@
-import { computed, toValue } from 'vue'
+import { computed, reactive, toValue } from 'vue'
 import { useFormField } from './useFormField'
 import type { NewGoal } from './useGoals'
 import type { Priority } from '@/types'
 
 export function useGoalForm(onSubmit: (data: NewGoal) => void) {
-  const todayStart = new Date()
-  todayStart.setHours(0, 0, 0, 0)
+  const todayDateString = new Date().toISOString().split('T')[0] || ''
 
-  const fields = {
+  const fields = reactive({
     title: useFormField<string>('', (value) => {
-      if (value.trim().length < 3) {
-        return 'Минимум 3 символа'
-      }
+      if (value.trim().length < 3) return 'Минимум 3 символа'
       return null
     }),
     description: useFormField<string>('', (value) => {
-      if (value.trim().length < 10) {
-        return 'Минимум 10 символов'
-      }
+      if (value.trim().length < 10) return 'Минимум 10 символов'
       return null
     }),
     deadline: useFormField<string>('', (value) => {
-      if (!value || value.trim() === '') {
-        return 'Укажите дату'
-      }
-      if (new Date(value) < todayStart) {
-        return 'Дата не может быть в прошлом'
-      }
+      if (!value || value.trim() === '') return 'Укажите дату'
+      if (value < todayDateString) return 'Дата не может быть в прошлом'
       return null
     }),
     priority: useFormField<Priority>('medium'),
-  }
+  })
 
   const isFormValid = computed(() => {
-    return Object.values(fields).every((field) => field.isValid.value)
+    return Object.values(fields).every((field) => field.isValid)
   })
 
   function submit() {
@@ -50,6 +41,7 @@ export function useGoalForm(onSubmit: (data: NewGoal) => void) {
 
     onSubmit(data)
     Object.values(fields).forEach((field) => field.reset())
+    console.log('submit goal')
   }
 
   return {

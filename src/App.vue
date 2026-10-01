@@ -2,6 +2,10 @@
 import GoalForm from './components/GoalForm.vue'
 import GoalList from './components/GoalList.vue'
 import GoalSteps from './components/GoalSteps.vue'
+
+import { useGoals } from './composables/useGoals.ts';
+
+const { addGoal } = useGoals()
 </script>
 
 <template>
@@ -12,7 +16,7 @@ import GoalSteps from './components/GoalSteps.vue'
 
     <main class="app__layout">
       <aside class="app__panel app__panel--form">
-        <GoalForm />
+        <GoalForm :on-submit="addGoal" />
       </aside>
 
       <section class="app__panel app__panel--list">

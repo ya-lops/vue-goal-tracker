@@ -368,3 +368,8 @@ button:hover {
   text-align: center;
   padding: 12px 0;
 }
+
+.field-error-message {
+  font-size: small;
+  color: red;
+}
