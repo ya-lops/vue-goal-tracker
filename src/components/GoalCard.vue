@@ -6,6 +6,7 @@ import Progress from './ui/Progress.vue'
 defineProps<{
   goal: Goal
   isSelected?: boolean
+  progress?: number
 }>()
 </script>
 
@@ -19,7 +20,8 @@ defineProps<{
     <p class="_desc">{{ goal.description }}</p>
 
     <div class="_progress">
-      <Progress />
+      {{ progress }}
+      <Progress :value="progress || 0" />
     </div>
 
     <footer class="_meta">

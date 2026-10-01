@@ -31,7 +31,10 @@ function selectGoal(id: string) {
       </section>
 
       <aside class="app__panel app__panel--steps">
-        <GoalSteps :goal-id="currentGoalId" />
+        <GoalSteps v-if="currentGoalId" :key="currentGoalId" :goal-id="currentGoalId" />
+        <template v-else>
+          <p>Выберите цель</p>
+        </template>
       </aside>
     </main>
   </div>

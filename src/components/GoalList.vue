@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { Goal } from '@/types'
 import GoalCard from '@/components/GoalCard.vue'
+import { useGoals } from '@/composables/useGoals'
+import { computed } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   goals: Goal[]
   currentGoalId: string | null
 }>()
@@ -10,6 +12,17 @@ defineProps<{
 const emit = defineEmits<{
   select: [id: string]
 }>()
+
+const { getGoalProgress } = useGoals()
+
+const progressMap = computed(() => {
+  const map = new Map<string, number>()
+
+  props.goals.forEach((goal) => {
+    map.set(goal.id, getGoalProgress(goal.id).value)
+  })
+  return map
+})
 </script>
 
 <template>
@@ -19,7 +32,7 @@ const emit = defineEmits<{
     </template>
     <template v-else>
       <GoalCard v-for="goal in goals" :key="goal.id" :goal="goal" :is-selected="goal.id === currentGoalId"
-        @click="emit('select', goal.id)" />
+        :progress="progressMap.get(goal.id) || 0" @click="emit('select', goal.id)" />
     </template>
   </div>
 </template>

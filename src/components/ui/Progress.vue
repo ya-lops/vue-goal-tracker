@@ -1,11 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  value?: number
+}>()
+</script>
 
 <template>
   <div class="progress" data-cmp="Progress">
     <div class="_bar">
-      <div class="_bar-value" style="--_value: 75%"></div>
+      <div class="_bar-value" :style="`--_value: ${value}%`"></div>
     </div>
-    <div class="_value">75%</div>
+    <div class="_value">{{ value }}%</div>
   </div>
 </template>
 
