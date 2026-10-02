@@ -23,6 +23,9 @@ const progressMap = computed(() => {
   })
   return map
 })
+
+// FAQ
+// Нормально ли писать @click="emit('select', goal.id)" или надо выносить в скрипты emit('select', goal.id) ?
 </script>
 
 <template>
@@ -31,8 +34,14 @@ const progressMap = computed(() => {
       <p>Нет целей. Создайте первую!</p>
     </template>
     <template v-else>
-      <GoalCard v-for="goal in goals" :key="goal.id" :goal="goal" :is-selected="goal.id === currentGoalId"
-        :progress="progressMap.get(goal.id) || 0" @click="emit('select', goal.id)" />
+      <GoalCard
+        v-for="goal in goals"
+        :key="goal.id"
+        :goal="goal"
+        :is-selected="goal.id === currentGoalId"
+        :progress="progressMap.get(goal.id) || 0"
+        @click="emit('select', goal.id)"
+      />
     </template>
   </div>
 </template>

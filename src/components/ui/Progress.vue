@@ -1,7 +1,11 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   value?: number
 }>()
+
+// FAQ
+// когда можно писать просто defineProps<{...}>() а когда const props = defineProps<{...}>() 
+// по моим наблюдениям конста не нужна если использовать пропс в темплейте
 </script>
 
 <template>

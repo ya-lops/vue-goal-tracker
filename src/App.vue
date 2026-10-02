@@ -13,6 +13,12 @@ const currentGoalId = ref<string | null>(null)
 function selectGoal(id: string) {
   currentGoalId.value = id
 }
+
+// FAQ
+// на примере current-goal-id как правильно писать? через - или кемелкейсом? есть какойто стандарт или это зависит от команды/проекта?
+//
+// мы ведь можем не писать :currentGoalId="currentGoalId", а написать короткое :currentGoalId
+// так не принято?
 </script>
 
 <template>
@@ -27,7 +33,7 @@ function selectGoal(id: string) {
       </aside>
 
       <section class="app__panel app__panel--list">
-        <GoalList :goals="goals" :current-goal-id="currentGoalId" @select="selectGoal" />
+        <GoalList :goals="goals" :currentGoalId="currentGoalId" @select="selectGoal" />
       </section>
 
       <aside class="app__panel app__panel--steps">

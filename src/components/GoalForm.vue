@@ -24,7 +24,10 @@ const { fields, isFormValid, submit } = useGoalForm(props.onSubmit)
     <div>
       <label>
         Описание
-        <textarea v-model="fields.description.value" @blur="fields.description.validateField"></textarea>
+        <textarea
+          v-model="fields.description.value"
+          @blur="fields.description.validateField"
+        ></textarea>
       </label>
       <span v-if="fields.description.error" class="field-error-message">{{
         fields.description.error

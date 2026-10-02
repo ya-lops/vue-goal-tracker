@@ -2,25 +2,33 @@
 import type { Goal } from '@/types'
 import Badge from './ui/Badge.vue'
 import Progress from './ui/Progress.vue'
+import { useGoals } from '@/composables/useGoals.ts'
+
+const { deleteGoal, getStepsForGoal } = useGoals()
 
 defineProps<{
   goal: Goal
   isSelected?: boolean
   progress?: number
 }>()
+
+// FAQ
+// Если надо добавить подтверждение на удаление, то это ведь не изменение самого deleteGoal, а надстройка
+// в которой сам deleteGoal будет после подтерждения.
+// то есть нужно по клику делать чтото типа confirm(deleteGoal(goal.id))
+// да?
 </script>
 
 <template>
-  <article class='goal-card' :class="{ '+selected': isSelected }" data-cmp="GoalCard">
+  <article class="goal-card" :class="{ '+selected': isSelected }" data-cmp="GoalCard">
     <header class="_header">
       <h3>{{ goal.title }}</h3>
-      <button class="goal-card__remove" title="Удалить">×</button>
+      <button class="goal-card__remove" title="Удалить" @click="deleteGoal(goal.id)">×</button>
     </header>
 
     <p class="_desc">{{ goal.description }}</p>
 
-    <div class="_progress">
-      {{ progress }}
+    <div class="_progress" v-if="getStepsForGoal(goal.id).value.length > 0">
       <Progress :value="progress || 0" />
     </div>
 
@@ -38,9 +46,7 @@ defineProps<{
   padding: 12px;
   background: var(--panel-2);
   cursor: pointer;
-  transition:
-    border-color 0.15s,
-    background 0.15s;
+  transition: all 0.15s;
 
   &:hover {
     border-color: var(--border-strong);
@@ -74,6 +80,14 @@ defineProps<{
 
   & ._progress {
     margin: 8px 0;
+    opacity: 1;
+    scale: 1;
+    transition: all 0.215s;
+    
+    @starting-style {
+      opacity: 0;
+      scale: 0.5;
+    }
   }
 
   & ._meta {

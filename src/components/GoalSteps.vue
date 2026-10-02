@@ -4,7 +4,7 @@ import { useGoals } from '@/composables/useGoals'
 import { useStepForm } from '@/composables/useStepForm'
 
 const props = defineProps<{
-  goalId: string  // Теперь точно string, не null
+  goalId: string
 }>()
 
 const { getStepsForGoal, toggleStep, deleteStep, addStep } = useGoals()
@@ -13,7 +13,8 @@ const steps = computed(() => getStepsForGoal(props.goalId).value)
 
 const progress = computed(() => {
   if (steps.value.length === 0) return 0
-  const completed = steps.value.filter(s => s.isCompleted).length
+  
+  const completed = steps.value.filter((s) => s.isCompleted).length
   return Math.round((completed / steps.value.length) * 100)
 })
 
@@ -37,7 +38,6 @@ const { fields, isFormValid, submit } = useStepForm(props.goalId, addStep)
     <p v-else>Нет подзадач. Добавьте первую!</p>
 
     <form class="step-panel__form" @submit.prevent="submit">
-      <!-- Вот здесь исправление: .value.value -->
       <input type="text" v-model="fields.title.value.value" placeholder="Новая подзадача" />
       <span v-if="fields.title.error.value" class="error">{{ fields.title.error.value }}</span>
       <button type="submit" :disabled="!isFormValid">+</button>
